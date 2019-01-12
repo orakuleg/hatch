@@ -30,27 +30,12 @@
       state: directory
       mode: 0755
 
-#- name: linux_server install
-#  hosts: linux_server
-#  roles:
-#    - install_senders
-#  become_user: root
-#  become: True
-#  with_items:
-#    - "{{ plugins }}"
-
 - name: linux_server install
   hosts: linux_server
+  roles:
+    - install_senders
   become_user: root
   become: True
-#  vars:
-#    ansible_user: "{{ ansible_user }}"
-#    ansible_ssh_private_key_file: "{{ ansible_ssh_private_key_file }}"
-  roles :
-    - role: install_senders
-      with_items:
-      - "{{ plugins }}"
-
 
 #
 #- name: ELK install
