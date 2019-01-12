@@ -17,10 +17,18 @@
       msg: "{{group_names}}"
 
 - name: Create tmp folder
-  file:
-    path: "{{ ELK_stack.temp_folder}}"
-    state: directory
-    mode: 0755
+  hosts: all
+  gather_facts: no
+  become_user: root
+#  vars:
+#    ansible_user: ec2-user
+#    ansible_ssh_private_key_file: /home/centos/mykey.pem
+  tasks:
+  - name: Create tmp folder
+    file:
+      path: "{{ ELK_stack.temp_folder}}"
+      state: directory
+      mode: 0755
 
 #- name: linux_server install
 #  hosts: linux_server
@@ -32,12 +40,17 @@
 #    - "{{ plugins }}"
 
 - name: linux_server install
-  include_role:
-    name: install_senders
-  vars:
-    plugin_name: "{{ item }}"
-  with_items:
-    - "{{ plugins }}"
+  hosts: linux_server
+  become_user: root
+  become: True
+#  vars:
+#    ansible_user: "{{ ansible_user }}"
+#    ansible_ssh_private_key_file: "{{ ansible_ssh_private_key_file }}"
+  roles :
+    - role: install_senders
+      with_items:
+      - "{{ plugins }}"
+
 
 #
 #- name: ELK install
