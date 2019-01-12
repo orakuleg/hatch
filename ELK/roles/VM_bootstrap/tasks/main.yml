@@ -16,7 +16,7 @@
       instance_type: "{{ ec2['instance_type'] }}"
       image: "{{ ec2['image'] }}"
       wait: yes
-      count: "{{ ec2['number_of_nodes'] }}"
+      count: "{{ number_of_nodes }}"
       wait: true
       vpc_subnet_id: "{{ ec2['vpc_subnet_id'] }}"
       assign_public_ip: yes
