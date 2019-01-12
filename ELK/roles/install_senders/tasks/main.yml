@@ -1,0 +1,41 @@
+---
+#- set_fact:
+#    domains: "{{ ec2.instances | map(attribute='public_ip') | list | join(',') }}"
+
+- name: Download the {{ ELK_stack.major_version }}.{{ ELK_stack.minor_version }}.{{ ELK_stack.patch }} version of plugin {{ plugin_name }}
+  get_url:
+    url: "https://artifacts.elastic.co/downloads/{{ plugin_name }}/{{ plugin_name }}-{{ ELK_stack.major_version }}.\
+         {{ ELK_stack.minor_version }}.{{ ELK_stack.patch }}-linux-x86_64.tar.gz"
+    dest: "{{ ELK_stack.temp_folder}}"
+#  with_items:
+#    - "{{plugins}}"
+
+- name: Extract {{ plugin_name }} into {{ ELK_stack.temp_folder }}
+  unarchive:
+    src: "{{ ELK_stack.temp_folder}}/{{ plugin_name }}-{{ ELK_stack.major_version }}.{{ ELK_stack.minor_version }}.{{ ELK_stack.patch }}-linux-x86_64.tar.gz"
+    dest: "{{ ELK_stack.temp_folder}}"
+#  with_items:
+#    - "{{plugins}}"
+
+- name: Install package.
+  yum:
+     name: "{{ plugin_name }}-{{ ELK_stack.major_version }}.{{ ELK_stack.minor_version }}.{{ ELK_stack.patch }}-x86_64.rpm"
+     state: present
+#  with_items:
+#    - "{{plugins}}"
+
+- name: Copy template for plugin {{ plugin_name }}
+  template:
+    src: "{{ plugin_name }}.j2"
+    dest: "/etc/{{ plugin_name }}/{{ plugin_name }}.yml"
+#  vars:
+#    ip_adresses: "{{ domains }}"
+#  with_items:
+#    - "{{plugins}}"
+
+- name: Start service httpd, if not started
+  service:
+    name: "{{ plugin_name }}"
+    state: started
+#  with_items:
+#    - "{{plugins}}"

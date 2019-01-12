@@ -9,3 +9,12 @@ ec2_vars:
   vpc_subnet_id: subnet-39ab9a62
   region: us-west-1
   group_id: sg-00a697b9100917dac
+ELK_stack:
+  major_version: 6
+  minor_version: 5
+  patch: 4
+  temp_folder: /tmp/ELK
+plugins:
+  - filebeat
+# Support multiple plugins enabled, just for test - only filebeat
+

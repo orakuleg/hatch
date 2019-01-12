@@ -16,12 +16,29 @@
     debug:
       msg: "{{group_names}}"
 
+- name: Create tmp folder
+  file:
+    path: "{{ ELK_stack.temp_folder}}"
+    state: directory
+    mode: 0755
+
 #- name: linux_server install
 #  hosts: linux_server
 #  roles:
 #    - install_senders
 #  become_user: root
 #  become: True
+#  with_items:
+#    - "{{ plugins }}"
+
+- name: linux_server install
+  include_role:
+    name: install_senders
+  vars:
+    plugin_name: "{{ item }}"
+  with_items:
+    - "{{ plugins }}"
+
 #
 #- name: ELK install
 #  hosts: monitoring_*

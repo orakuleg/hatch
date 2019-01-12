@@ -27,8 +27,8 @@
 - name: Add instances to cluster "linux_server"
   add_host: hostname={{ item.public_ip }} groups=linux_server
   loop: "{{ ec2.instances }}"
-
   when: item.ami_launch_index == "0"
+
 - name: Add instances to cluster "monitoring_1"
   add_host: hostname={{ item.public_ip }} groups=monitoring_1
   loop: "{{ ec2.instances }}"
