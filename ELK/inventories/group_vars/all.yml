@@ -2,7 +2,7 @@
 production: true
 production_nodes: 5
 non_production_nodes: 3
-ec2:
+ec2_vars:
   key_name: mykey
   instance_type: t2.micro
   image: ami-00284b413e05d88aa

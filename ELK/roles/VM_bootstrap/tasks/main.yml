@@ -12,16 +12,16 @@
 
   - name: Provision instances.
     ec2:
-      key_name: "{{ ec2['key_name'] }}"
-      instance_type: "{{ ec2['instance_type'] }}"
-      image: "{{ ec2['image'] }}"
+      key_name: "{{ ec2_vars.key_name }}"
+      instance_type: "{{ ec2_vars.instance_type }}"
+      image: "{{ ec2_vars.image }}"
       wait: yes
       count: "{{ number_of_nodes }}"
       wait: true
-      vpc_subnet_id: "{{ ec2['vpc_subnet_id'] }}"
+      vpc_subnet_id: "{{ ec2_vars.vpc_subnet_id }}"
       assign_public_ip: yes
-      region: "{{ ec2['region'] }}"
-      group_id: "{{ ec2['group_id'] }}"
+      region: "{{ ec2_vars.region }}"
+      group_id: "{{ ec2_vars.group_id }}"
     register: ec2
 
   - name: Add all instance public IPs to host group
