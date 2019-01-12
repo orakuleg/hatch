@@ -1,0 +1,11 @@
+---
+production: true
+production_nodes: 5
+non_production_nodes: 3
+ec2:
+  key_name: mykey
+  instance_type: t2.micro
+  image: ami-00284b413e05d88aa
+  vpc_subnet_id: subnet-39ab9a62
+  region: us-west-1
+  group_id: sg-00a697b9100917dac

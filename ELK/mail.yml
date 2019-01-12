@@ -1,0 +1,39 @@
+---
+- name: VM_bootstrap
+  hosts: localhost
+  roles:
+    - VM_bootstrap
+  become_user: root
+  become: True
+
+- name: show the groups the host(s) are in
+  hosts: all
+  gather_facts: no
+  tasks:
+  - name: show the groups the host(s) are in
+    debug:
+      msg: "{{group_names}}"
+
+#- name: linux_server install
+#  hosts: linux_server
+#  roles:
+#    - install_senders
+#  become_user: root
+#  become: True
+#
+#- name: ELK install
+#  hosts: monitoring_*
+#  serial: 2
+#  roles:
+#    - elastik_install
+#    - kibana_install
+#    - logstash_install
+#  become_user: root
+#  become: True
+#
+# - name: monitoring_1 install
+#   hosts: monitoring_1
+#   roles:
+#     - prod_elastik_install
+#   become_user: root
+#   become: True
