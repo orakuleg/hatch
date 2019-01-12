@@ -5,6 +5,8 @@
     - VM_bootstrap
   become_user: root
   become: True
+  connection: local
+  gather_facts: False
 
 - name: show the groups the host(s) are in
   hosts: all
