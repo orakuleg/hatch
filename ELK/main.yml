@@ -20,9 +20,6 @@
   hosts: all
   gather_facts: no
   become_user: root
-#  vars:
-#    ansible_user: ec2-user
-#    ansible_ssh_private_key_file: /home/centos/mykey.pem
   tasks:
   - name: Create tmp folder
     file:

@@ -39,4 +39,14 @@
   loop: "{{ ec2.instances }}"
   when: (item.ami_launch_index == "2" or item.ami_launch_index == "4" )
 
+- name: Add instances to cluster "logstash"
+  add_host: hostname={{ item.public_ip }} groups=logstash
+  loop: "{{ ec2.instances }}"
+  when: (item.ami_launch_index == "1")
+
+- name: Add instances to cluster "kibana"
+  add_host: hostname={{ item.public_ip }} groups=kibana
+  loop: "{{ ec2.instances }}"
+  when: (item.ami_launch_index == "1")
+
 - pause: minutes=1

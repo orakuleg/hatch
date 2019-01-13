@@ -1,36 +1,29 @@
 ---
-- name: "Download the {{ ELK_stack.major_version }}.{{ ELK_stack.minor_version }}.{{ ELK_stack.patch }} version of item {{ item }}"
+- name: Download the plugin
   get_url:
-    url: "https://artifacts.elastic.co/downloads/{{ item }}/{{ item }}-{{ ELK_stack.major_version }}.\
+    url: "https://artifacts.elastic.co/downloads/beats/{{ item }}/{{ item }}-{{ ELK_stack.major_version }}.\
          {{ ELK_stack.minor_version }}.{{ ELK_stack.patch }}-linux-x86_64.tar.gz"
     dest: "{{ ELK_stack.temp_folder}}"
-  loop:
+  with_tems:
     - "{{ plugins }}"
 
-- name: "Extract {{ item }} into {{ ELK_stack.temp_folder }}"
-  unarchive:
-    src: "{{ ELK_stack.temp_folder}}/{{ item }}-{{ ELK_stack.major_version }}.{{ ELK_stack.minor_version }}.{{ ELK_stack.patch }}-linux-x86_64.tar.gz"
-    dest: "{{ ELK_stack.temp_folder}}"
-  loop:
-    - "{{ plugins }}"
-
-- name: "Install package."
+- name: Install package.
   yum:
-     name: "{{ item }}-{{ ELK_stack.major_version }}.{{ ELK_stack.minor_version }}.{{ ELK_stack.patch }}-x86_64.rpm"
+     name: "{{ ELK_stack.temp_folder}}/{{ item }}-{{ ELK_stack.major_version }}.{{ ELK_stack.minor_version }}.{{ ELK_stack.patch }}-x86_64.rpm"
      state: present
-  loop:
+  with_tems:
     - "{{ plugins }}"
 
-- name: "Copy template for item {{ item }}"
+- name: Copy template for plugin
   template:
     src: "{{ item }}.j2"
     dest: "/etc/{{ item }}/{{ item }}.yml"
-  loop:
+  with_tems:
     - "{{ plugins }}"
 
-- name: "Start service {{ item }}, if not started"
+- name: Start service , if not started
   service:
     name: "{{ item }}"
     state: started
-  loop:
+  with_tems:
     - "{{ plugins }}"
