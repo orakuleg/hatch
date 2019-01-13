@@ -314,8 +314,8 @@ indices.recovery.max_bytes_per_sec: 100mb
 {% if groups.monitoring_production %}
   {% for host in groups.monitoring_production %}
     {{ elastic_hosts.append( host ) }}
-  {% endif %}
-{% endfor %}
+  {% endfor %}
+{% endif %}
 
 discovery.zen.minimum_master_nodes: "{% (((elastic_hosts|join(', ')|length) / 2 )|round + 1 ) %}"  # count?
 discovery.zen.ping.unicast.hosts: ["{{ elastic_hosts|join(', ') }}"]
