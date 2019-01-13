@@ -28,7 +28,7 @@
       mode: 0755
 
 - name: ELK install
-  hosts: monitoring_*
+  hosts: elastic_instances
   serial: 2
   roles:
     - elastik_install

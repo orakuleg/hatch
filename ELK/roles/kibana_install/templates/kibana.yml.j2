@@ -14,4 +14,4 @@ server.host: "0.0.0.0"
 # that connects to this Kibana instance.
 #elasticsearch.preserveHost: true
 
-elasticsearch.url: "https://{{ groups['monitoring_normal'][0] }}:9200"
+elasticsearch.url: "https://{{ groups['elastic_instances'][0] }}:9200"

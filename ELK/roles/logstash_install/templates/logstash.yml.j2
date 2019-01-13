@@ -1,7 +1,8 @@
 {% set elastic_hosts = [] %}
-{% for host in groups.monitoring_normal %}
+{% for host in groups.elastic_instances %}
   {{ elastic_hosts.append( host+":9200" ) }}
 {% endfor %}
+
 input {
   beats {
     port => "5044"
@@ -16,6 +17,6 @@ filter {
 
 output {
   elasticsearch {
-    hosts => ["{{ elastic_hosts|join(', ') }}"]
+    hosts => {{ elastic_hosts }}
   }
 }

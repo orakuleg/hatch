@@ -308,15 +308,9 @@ indices.recovery.max_bytes_per_sec: 100mb
 # than 1 when running more than 2 nodes in the cluster.
 #
 {% set elastic_hosts = [] %}
-{% for host in groups.monitoring_normal %}
+{% for host in groups.elastic_instances %}
   {{ elastic_hosts.append( host ) }}
 {% endfor %}
-{% if monitoring_production is defined %}
-  {% for host in groups.monitoring_production %}
-    {{ elastic_hosts.append( host ) }}
-  {% endfor %}
-{% endif %}
-
 discovery.zen.minimum_master_nodes: "{{ ((((elastic_hosts|length) // 2 )+ 1) )}}"
 discovery.zen.ping.unicast.hosts:
 {% for host in elastic_hosts %}

@@ -22,24 +22,19 @@
   loop: "{{ ec2.instances }}"
   when: item.ami_launch_index == "0"
 
-- name: Add instances to cluster "monitoring_normal"
-  add_host: hostname={{ item.public_ip }} groups=monitoring_normal
+- name: Add instances to cluster "elastic_instances"
+  add_host: hostname={{ item.public_ip }} groups=elastic_instances
   loop: "{{ ec2.instances }}"
-  when: (item.ami_launch_index|int in range(1, non_production_nodes+1))
-
-- name: Add instances to cluster "monitoring_production"
-  add_host: hostname={{ item.public_ip }} groups=monitoring_production
-  loop: "{{ ec2.instances }}"
-  when: (item.ami_launch_index|int in range(non_production_nodes+1, non_production_nodes+production_nodes|int+1))
+  when: (item.ami_launch_index|int in range(1, elastic_nodes+1))
 
 - name: Add instances to cluster "logstash"
   add_host: hostname={{ item.public_ip }} groups=logstash
   loop: "{{ ec2.instances }}"
-  when: (item.ami_launch_index == "1")
+  when: (item.ami_launch_index|int in range(elastic_nodes+1, elastic_nodes+logstash_nodes+1))
 
 - name: Add instances to cluster "kibana"
   add_host: hostname={{ item.public_ip }} groups=kibana
   loop: "{{ ec2.instances }}"
-  when: (item.ami_launch_index == "2")
+  when: (item.ami_launch_index|int in range(elastic_nodes+logstash_nodes+1, elastic_nodes+logstash_nodes+kibana_nodes+1))
 
 - pause: minutes=1

@@ -1,9 +1,10 @@
 ---
 production: false
 lunix_nodes: 1
-production_nodes: "{{ non_production_nodes if production == 'true' else '0' }}"
-non_production_nodes: 2
-total_nodes: "{{ non_production_nodes + production_nodes|int + lunix_nodes }}"
+elastic_nodes: 2
+logstash_nodes: 1
+kibana_nodes: 1
+total_nodes: "{{ lunix_nodes + elastic_nodes + logstash_nodes + kibana_nodes }}"
 ec2_vars:
   key_name: mykey
   instance_type: t2.micro
