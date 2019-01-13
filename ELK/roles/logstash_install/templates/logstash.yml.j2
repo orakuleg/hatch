@@ -1,0 +1,21 @@
+{% set elastic_hosts = [] %}
+{% for host in groups.monitoring_normal %}
+  {{ elastic_hosts.append( host+":9200" ) }}
+{% endfor %}
+input {
+  beats {
+    port => "5044"
+  }
+}
+
+filter {
+  grok {
+    match => { "source" => "%{GREEDYDATA}/%{GREEDYDATA:app}.log" }
+  }
+}
+
+output {
+  elasticsearch {
+    hosts => ["{{ elastic_hosts|join(', ') }}"]
+  }
+}

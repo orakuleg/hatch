@@ -41,13 +41,13 @@
     - elastik_install
   become_user: root
   become: True
-#
-#- name: logstash_installation
-#  hosts: logstash
-#  roles:
-#    - logstash_install
-#  become_user: root
-#  become: True
+
+- name: logstash_installation
+  hosts: logstash
+  roles:
+    - logstash_install
+  become_user: root
+  become: True
 
 - name: kibana_installation
   hosts: kibana

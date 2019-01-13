@@ -1,0 +1,28 @@
+---
+- name: Download logstash
+  get_url:
+    url: "https://artifacts.elastic.co/downloads/logstash/logstash-{{ ELK_stack.major_version }}.\
+         {{ ELK_stack.minor_version }}.{{ ELK_stack.patch }}.rpm"
+    dest: "{{ ELK_stack.temp_folder}}"
+
+- name: Install jdk.
+  yum:
+     name: "java-1.8.0-openjdk.x86_64"
+     state: present
+
+- name: Install logstash rpm.
+  yum:
+     name: "{{ ELK_stack.temp_folder}}/logstash-{{ ELK_stack.major_version }}.{{ ELK_stack.minor_version }}.{{ ELK_stack.patch }}.rpm"
+     state: present
+
+- name: Copy main conf for elastic
+  template:
+    src: "logstash.yml.j2"
+    dest: "/etc/logstash/logstash.yml"
+
+- name: Start elasticsearch service, if not started
+  service:
+    name: logstash
+    state: started
+
+- pause: minutes=1
