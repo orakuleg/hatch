@@ -2,7 +2,7 @@
 - name: Download the plugin
   get_url:
     url: "https://artifacts.elastic.co/downloads/beats/{{ item }}/{{ item }}-{{ ELK_stack.major_version }}.\
-         {{ ELK_stack.minor_version }}.{{ ELK_stack.patch }}-linux-x86_64.tar.gz"
+         {{ ELK_stack.minor_version }}.{{ ELK_stack.patch }}-x86_64.rpm"
     dest: "{{ ELK_stack.temp_folder}}"
   with_tems:
     - "{{ plugins }}"
