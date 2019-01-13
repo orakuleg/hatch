@@ -370,3 +370,6 @@ indices.recovery.max_bytes_per_sec: 100mb
 #monitor.jvm.gc.ConcurrentMarkSweep.warn: 10s
 #monitor.jvm.gc.ConcurrentMarkSweep.info: 5s
 #monitor.jvm.gc.ConcurrentMarkSweep.debug: 2s
+{% if inventory_hostname in groups.monitoring_normal %}
+xpack.monitoring.collection.enabled: false
+{% endif %}

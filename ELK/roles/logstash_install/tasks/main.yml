@@ -34,6 +34,7 @@
 
 - name: Run a installation script
   script: /usr/share/logstash/bin/system-install
+  remote_src: yes
 
 - name: Start elasticsearch service, if not started
   service:
