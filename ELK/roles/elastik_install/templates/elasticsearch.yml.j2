@@ -307,7 +307,17 @@ indices.recovery.max_bytes_per_sec: 100mb
 # operational within the cluster. Its recommended to set it to a higher value
 # than 1 when running more than 2 nodes in the cluster.
 #
-# discovery.zen.minimum_master_nodes: 1
+{% set elastic_hosts = [] %}
+{% for host in groups.monitoring_normal %}
+  {{ elastic_hosts.append( host ) }}
+{% endfor %}
+{% if groups.monitoring_production %}
+  {% for host in groups.monitoring_production %}
+    {{ elastic_hosts.append( host ) }}
+  {% endif %}
+{% endfor %}
+discovery.zen.minimum_master_nodes: 1 # count?
+discovery.zen.ping.unicast.hosts: ["{{ elastic_hosts|join(', ') }}"]
 
 # Set the time to wait for ping responses from other nodes when discovering.
 # Set this option to a higher value on a slow or congested network
@@ -370,6 +380,3 @@ indices.recovery.max_bytes_per_sec: 100mb
 #monitor.jvm.gc.ConcurrentMarkSweep.warn: 10s
 #monitor.jvm.gc.ConcurrentMarkSweep.info: 5s
 #monitor.jvm.gc.ConcurrentMarkSweep.debug: 2s
-{% if inventory_hostname in groups.monitoring_normal %}
-xpack.monitoring.collection.enabled: false
-{% endif %}
