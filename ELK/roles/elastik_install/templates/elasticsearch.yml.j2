@@ -311,13 +311,13 @@ indices.recovery.max_bytes_per_sec: 100mb
 {% for host in groups.monitoring_normal %}
   {{ elastic_hosts.append( host ) }}
 {% endfor %}
-{% if monitoring_production in groups %}
+{% if monitoring_production is defined %}
   {% for host in groups.monitoring_production %}
     {{ elastic_hosts.append( host ) }}
   {% endfor %}
 {% endif %}
 
-discovery.zen.minimum_master_nodes: "{{ (((elastic_hosts|join(', ')|length) / 2 )|round + 1 ) }}"  # count?
+discovery.zen.minimum_master_nodes: "{{ (((elastic_hosts|length) / 2 )|round + 1 ) }}"  # count?
 discovery.zen.ping.unicast.hosts: ["{{ elastic_hosts|join(', ') }}"]
 
 # Set the time to wait for ping responses from other nodes when discovering.
