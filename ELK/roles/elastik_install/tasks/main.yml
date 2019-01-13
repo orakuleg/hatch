@@ -15,10 +15,21 @@
      name: "{{ ELK_stack.temp_folder}}/elasticsearch-{{ ELK_stack.major_version }}.{{ ELK_stack.minor_version }}.{{ ELK_stack.patch }}.rpm"
      state: present
 
-- name: Copy template for plugin
+- name: Copy main conf for elastic
   template:
     src: "elasticsearch.yml.j2"
     dest: "/etc/elasticsearch/elasticsearch.yml"
+
+- name: Copy main JVM conf for elastic
+  template:
+    src: "jvm.options.j2"
+    dest: "/etc/elasticsearch/jvm.options"
+
+- name: Copy main log conf for elastic
+  copy:
+    src: log4j2.properties
+    dest: "/etc/elasticsearch/log4j2.properties"
+    mode: 0755
 
 - name: Start elasticsearch service, if not started
   service:
