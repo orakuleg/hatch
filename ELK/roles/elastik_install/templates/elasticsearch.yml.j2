@@ -311,7 +311,7 @@ indices.recovery.max_bytes_per_sec: 100mb
 {% for host in groups.monitoring_normal %}
   {{ elastic_hosts.append( host ) }}
 {% endfor %}
-{% if groups.monitoring_production %}
+{% if monitoring_production in groups %}
   {% for host in groups.monitoring_production %}
     {{ elastic_hosts.append( host ) }}
   {% endfor %}
