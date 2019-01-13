@@ -27,6 +27,6 @@
     url: "http://{{ inventory_hostname }}:{{ kibana_port }}"
     status_code: 200
 
-  - name: check parameter
-    debug:
-      msg: "{{ inventory_hostname }}"
+- name: check parameter
+  debug:
+    msg: "{{ inventory_hostname }}"
