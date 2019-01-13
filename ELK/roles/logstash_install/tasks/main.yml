@@ -7,7 +7,7 @@
 
 - name: Install jdk.
   yum:
-     name: "java-1.8.0-openjdk.x86_64"
+     name: "{{ ELK_stack.java_version }}"
      state: present
 
 - name: Install logstash rpm.

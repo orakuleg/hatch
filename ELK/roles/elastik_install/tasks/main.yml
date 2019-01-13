@@ -3,11 +3,11 @@
   get_url:
     url: "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-{{ ELK_stack.major_version }}.\
          {{ ELK_stack.minor_version }}.{{ ELK_stack.patch }}.rpm"
-    dest: "{{ ELK_stack.temp_folder}}"
+    dest: "{{ ELK_stack.temp_folder }}"
 
 - name: Install jdk.
   yum:
-     name: "java-1.8.0-openjdk.x86_64"
+     name: "{{ ELK_stack.java_version }}"
      state: present
 
 - name: Install elasticsearch rpm.

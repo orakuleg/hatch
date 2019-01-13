@@ -17,6 +17,7 @@ ELK_stack:
   patch: 4
   temp_folder: /tmp/ELK
   cluster_name: test_cluster
+  java_version: java-1.8.0-openjdk.x86_64
 kibana_port: 5601
 plugins:
   - filebeat
