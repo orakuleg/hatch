@@ -13,7 +13,7 @@
 - name: Copy template for plugin
   template:
     src: "kibana.yml.j2"
-    dest: "/etc/kibana.yml"
+    dest: "/etc/kibana/kibana.yml"
 
 - name: Start kibana service, if not started
   service:
@@ -24,7 +24,7 @@
 
 - name: Check kibana web-UI
   uri:
-    url: "http://{{ inventory_hostname }}:5601"
+    url: "http://{{ inventory_hostname }}:{{ kibana_port }}"
     status_code: 200
 
   - name: check parameter

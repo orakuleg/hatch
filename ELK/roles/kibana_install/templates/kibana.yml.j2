@@ -16,10 +16,7 @@ server.host: "{{ host }}"
 # that connects to this Kibana instance.
 #elasticsearch.preserveHost: true
 {% set elastic_hosts = [] %}
-{% set hostname = '' %}
 {% for host in groups.monitoring_1 %}
-  {% set hostname = host ~ ":9200" %}
-  {% do elastic_hosts.append(hostname) %}
+  {{ elastic_hosts.append( host+":9200" ) }}
 {% endfor %}
-{% elastic_hosts|join(', ') %}
-elasticsearch.hosts: "{{ elastic_hosts }}"
+elasticsearch.hosts: ["{{ elastic_hosts|join(', ') }}"]
