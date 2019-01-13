@@ -14,7 +14,7 @@ server.host: "0.0.0.0"
 # that connects to this Kibana instance.
 #elasticsearch.preserveHost: true
 {% set elastic_hosts = [] %}
-{% for host in groups.monitoring_1 %}
+{% for host in groups.monitoring_normal %}
   {{ elastic_hosts.append( host+":9200" ) }}
 {% endfor %}
 elasticsearch.hosts: ["{{ elastic_hosts|join(', ') }}"]

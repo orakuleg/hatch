@@ -1,18 +1,11 @@
 ---
-- set_fact:
-    number_of_nodes: "{{ non_production_nodes }}"
-
-- set_fact:
-    number_of_nodes: "{{ production_nodes }}"
-  when: ( production == true )
-
 - name: Provision instances.
   ec2:
     key_name: "{{ ec2_vars.key_name }}"
     instance_type: "{{ ec2_vars.instance_type }}"
     image: "{{ ec2_vars.image }}"
     wait: yes
-    count: "{{ number_of_nodes }}"
+    count: "{{ total_nodes }}"
     wait: true
     vpc_subnet_id: "{{ ec2_vars.vpc_subnet_id }}"
     assign_public_ip: yes
@@ -29,15 +22,15 @@
   loop: "{{ ec2.instances }}"
   when: item.ami_launch_index == "0"
 
-- name: Add instances to cluster "monitoring_1"
-  add_host: hostname={{ item.public_ip }} groups=monitoring_1
+- name: Add instances to cluster "monitoring_normal"
+  add_host: hostname={{ item.public_ip }} groups=monitoring_normal
   loop: "{{ ec2.instances }}"
-  when: (item.ami_launch_index == "1" or item.ami_launch_index == "3" )
+  when: (item.ami_launch_index|int in range(1, non_production_nodes))
 
-- name: Add instances to cluster "monitoring_2"
-  add_host: hostname={{ item.public_ip }} groups=monitoring_2
+- name: Add instances to cluster "monitoring_production"
+  add_host: hostname={{ item.public_ip }} groups=monitoring_production
   loop: "{{ ec2.instances }}"
-  when: (item.ami_launch_index == "2" or item.ami_launch_index == "4" )
+  when: (item.ami_launch_index|int in range(non_production_nodes+1, non_production_nodes+production_nodes))
 
 - name: Add instances to cluster "logstash"
   add_host: hostname={{ item.public_ip }} groups=logstash

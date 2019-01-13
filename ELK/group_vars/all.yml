@@ -1,7 +1,9 @@
 ---
 production: false
-production_nodes: 5
-non_production_nodes: 3
+lunix_nodes: 1
+production_nodes: {{ non_production_nodes if production == 'true' else '0' }}
+non_production_nodes: 2
+total_nodes: {{ non_production_nodes + production_nodes + lunix_nodes }}
 ec2_vars:
   key_name: mykey
   instance_type: t2.micro
