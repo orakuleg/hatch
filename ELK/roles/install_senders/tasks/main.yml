@@ -16,7 +16,7 @@
 
 - name: Copy template for plugin
   template:
-    src: "{{ item }}.j2"
+    src: "{{ item }}.yml.j2"
     dest: "/etc/{{ item }}/{{ item }}.yml"
   with_items:
     - "{{ plugins }}"

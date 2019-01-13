@@ -1,0 +1,25 @@
+# Kibana is served by a back end server. This setting specifies the port to use.
+server.port: "{{ kibana_port }}"
+
+# Specifies the address to which the Kibana server will bind. IP addresses and host names are both valid values.
+# The default is 'localhost', which usually means remote machines will not be able to connect.
+# To allow connections from remote users, set this parameter to a non-loopback address.
+{% for host in groups.kibana %}
+server.host: "{{ host }}"
+{% endfor %}
+
+# The URLs of the Elasticsearch instances to use for all your queries.
+#elasticsearch.hosts: ["http://localhost:9200"]
+
+# When this setting's value is true Kibana uses the hostname specified in the server.host
+# setting. When the value of this setting is false, Kibana uses the hostname of the host
+# that connects to this Kibana instance.
+#elasticsearch.preserveHost: true
+{% set elastic_hosts = [] %}
+{% set hostname = '' %}
+{% for host in groups.monitoring_1 %}
+  {% set hostname = host ~ ":9200" %}
+  {% do elastic_hosts.append(hostname) %}
+{% endfor %}
+{% elastic_hosts|join(', ') %}
+elasticsearch.hosts: "{{ elastic_hosts }}"

@@ -50,12 +50,12 @@
 #  become_user: root
 #  become: True
 
-#- name: kibana_installation
-#  hosts: kibana
-#  roles:
-#    - kibana_install
-#  become_user: root
-#  become: True
+- name: kibana_installation
+  hosts: kibana
+  roles:
+    - kibana_install
+  become_user: root
+  become: True
 
 # - name: monitoring_2 install
 #   hosts: monitoring_2

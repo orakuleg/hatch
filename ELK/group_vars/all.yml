@@ -14,6 +14,7 @@ ELK_stack:
   minor_version: 5
   patch: 4
   temp_folder: /tmp/ELK
+kibana_port: 5601
 plugins:
   - filebeat
 ansible_user: ec2-user

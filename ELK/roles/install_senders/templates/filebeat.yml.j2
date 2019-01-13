@@ -24,13 +24,13 @@ setup.template.settings:
 #============================== Kibana =====================================
 {% for host in groups.kibana %}
 setup.kibana:
-  host: "{{ host }}:5601"
+  host: "{{ host }}:{{ kibana_port }}"
 {% endfor %}
 #-------------------------- Elasticsearch output ------------------------------
-{% for host in groups.monitoring_1 %}
+#{% for host in groups.monitoring_1 %}
 #output.elasticsearch:
 #  hosts: ["{{ host }}:9200"]
-{% endfor %}
+#{% endfor %}
 #----------------------------- Logstash output --------------------------------
 {% for host in groups.logstash %}
 output.logstash:

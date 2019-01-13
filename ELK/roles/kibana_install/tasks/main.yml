@@ -1,0 +1,32 @@
+---
+- name: Download kibana
+  get_url:
+    url: "https://artifacts.elastic.co/downloads/kibana/kibana-{{ ELK_stack.major_version }}.\
+         {{ ELK_stack.minor_version }}.{{ ELK_stack.patch }}-x86_64.rpm"
+    dest: "{{ ELK_stack.temp_folder}}"
+
+- name: Install kibana rpm.
+  yum:
+     name: "{{ ELK_stack.temp_folder}}/kibana-{{ ELK_stack.major_version }}.{{ ELK_stack.minor_version }}.{{ ELK_stack.patch }}-x86_64.rpm"
+     state: present
+
+- name: Copy template for plugin
+  template:
+    src: "kibana.yml.j2"
+    dest: "/etc/kibana.yml"
+
+- name: Start kibana service, if not started
+  service:
+    name: kibana
+    state: started
+
+- pause: minutes=1
+
+- name: Check kibana web-UI
+  uri:
+    url: "http://{{ inventory_hostname }}:5601"
+    status_code: 200
+
+  - name: check parameter
+    debug:
+      msg: "{{ inventory_hostname }}"
