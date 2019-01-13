@@ -15,10 +15,25 @@
      name: "{{ ELK_stack.temp_folder}}/logstash-{{ ELK_stack.major_version }}.{{ ELK_stack.minor_version }}.{{ ELK_stack.patch }}.rpm"
      state: present
 
-- name: Copy main conf for elastic
+- name: Copy main conf for logstash
   template:
     src: "logstash.yml.j2"
     dest: "/etc/logstash/logstash.yml"
+
+- name: Copy main log conf for logstash
+  copy:
+    src: log4j2.properties
+    dest: "/etc/logstash/log4j2.properties"
+    mode: 0755
+
+- name: Copy main JVM conf for logstash
+  copy:
+    src: jvm.options
+    dest: "/etc/logstash/jvm.options"
+    mode: 0755
+
+- name: Run a installation script
+  script: /usr/share/logstash/bin/system-install
 
 - name: Start elasticsearch service, if not started
   service:
