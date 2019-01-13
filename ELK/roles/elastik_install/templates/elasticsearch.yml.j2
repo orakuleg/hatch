@@ -36,7 +36,7 @@ cluster.name: "{{ ELK_stack.cluster_name }}"
 # Node names are generated dynamically on startup, so you're relieved
 # from configuring them manually. You can tie this node to a specific name:
 #
-node.name: "{{ inventory_hostname }}"
+node.name: "{{ inventory_hostname }}_node"
 
 # Every node can be configured to allow or deny being eligible as the master,
 # and to allow or deny to store the data.
@@ -101,11 +101,11 @@ node.data: true
 
 # Set the number of shards (splits) of an index (5 by default):
 #
-index.number_of_shards: 2
+#index.number_of_shards: 2
 
 # Set the number of replicas (additional copies) of an index (1 by default):
 #
-index.number_of_replicas: 1
+#index.number_of_replicas: 1
 
 # Note, that for development on a local machine, with small indices, it usually
 # makes sense to "disable" the distributed features:
@@ -143,13 +143,13 @@ index.number_of_replicas: 1
 
 # Path to directory where to store index data allocated for this node.
 #
-# path.data: /path/to/data
+# Path to directory where to store the data (separate multiple locations by comma):
 #
-# Can optionally include more than one location, causing data to be striped across
-# the locations (a la RAID 0) on a file level, favouring locations with most free
-# space on creation. For example:
+path.data: /var/lib/elasticsearch
 #
-# path.data: /path/to/data1,/path/to/data2
+# Path to log files:
+#
+path.logs: /var/log/elasticsearch
 
 # Path to temporary files:
 #
@@ -178,7 +178,7 @@ index.number_of_replicas: 1
 #
 # Set this property to true to lock the memory:
 #
-bootstrap.mlockall: true
+#bootstrap.mlockall: true
 
 # Make sure that the ES_MIN_MEM and ES_MAX_MEM environment variables are set
 # to the same value, and that the machine has enough memory to allocate
@@ -268,9 +268,9 @@ gateway.expected_nodes: 2
 # Protect against accidental close/delete operations
 # on all indices. You can still close/delete individual
 # indices
-action.disable_close_all_indices: true
-action.disable_delete_all_indices: true
-action.disable_shutdown: true
+#action.disable_close_all_indices: true
+#action.disable_delete_all_indices: true
+#action.disable_shutdown: true
 
 ############################# Recovery Throttling #############################
 
