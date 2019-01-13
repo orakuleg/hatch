@@ -161,7 +161,7 @@ path.logs: /var/log/elasticsearch
 
 # Path to where plugins are installed:
 #
-# path.plugins: /path/to/plugins
+path.plugins: /etc/elasticsearch
 
 
 #################################### Plugin ###################################
@@ -316,7 +316,8 @@ indices.recovery.max_bytes_per_sec: 100mb
     {{ elastic_hosts.append( host ) }}
   {% endif %}
 {% endfor %}
-discovery.zen.minimum_master_nodes: 1 # count?
+
+discovery.zen.minimum_master_nodes: "{% (((elastic_hosts|join(', ')|length) / 2 )|round + 1 ) %}"  # count?
 discovery.zen.ping.unicast.hosts: ["{{ elastic_hosts|join(', ') }}"]
 
 # Set the time to wait for ping responses from other nodes when discovering.
