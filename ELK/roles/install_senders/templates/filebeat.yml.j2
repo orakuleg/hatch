@@ -27,7 +27,7 @@ setup.kibana:
   host: "{{ host }}:{{ kibana_port }}"
 {% endfor %}
 #-------------------------- Elasticsearch output ------------------------------
-#{% for host in groups.monitoring_1 %}
+#{% for host in groups.monitoring_normal %}
 #output.elasticsearch:
 #  hosts: ["{{ host }}:9200"]
 #{% endfor %}
