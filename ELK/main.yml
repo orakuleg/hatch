@@ -34,14 +34,13 @@
   become_user: root
   become: True
 
-#
-#- name: ELK install
-#  hosts: monitoring_*
-#  serial: 2
-#  roles:
-#    - elastik_install
-#  become_user: root
-#  become: True
+- name: ELK install
+  hosts: monitoring_*
+  serial: 2
+  roles:
+    - elastik_install
+  become_user: root
+  become: True
 #
 #- name: logstash_installation
 #  hosts: logstash

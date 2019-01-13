@@ -1,0 +1,41 @@
+---
+- name: Download elasticsearch
+  get_url:
+    url: "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-{{ ELK_stack.major_version }}.\
+         {{ ELK_stack.minor_version }}.{{ ELK_stack.patch }}.rpm"
+    dest: "{{ ELK_stack.temp_folder}}"
+
+- name: Install jdk.
+  yum:
+     name: "java-1.8.0-openjdk.x86_64"
+     state: present
+
+- name: Install elasticsearch rpm.
+  yum:
+     name: "{{ ELK_stack.temp_folder}}/elasticsearch-{{ ELK_stack.major_version }}.{{ ELK_stack.minor_version }}.{{ ELK_stack.patch }}.rpm"
+     state: present
+
+- name: Copy template for plugin
+  template:
+    src: "elasticsearch.yml.j2"
+    dest: "/etc/elasticsearch/elasticsearch.yml"
+
+- name: Start elasticsearch service, if not started
+  service:
+    name: elasticsearch
+    state: started
+
+- pause: minutes=1
+
+- name: Check elasticsearch
+  uri:
+    url: "http://{{ inventory_hostname }}:9200"
+    status_code: ['200','503']
+  register: response
+  until: "response.json != {}"
+  retries: 6
+  delay: 10
+
+- name: check parameter
+  debug:
+    msg: "{{ inventory_hostname }}"

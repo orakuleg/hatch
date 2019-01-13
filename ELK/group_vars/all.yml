@@ -14,6 +14,7 @@ ELK_stack:
   minor_version: 5
   patch: 4
   temp_folder: /tmp/ELK
+  cluster_name: test_cluster
 kibana_port: 5601
 plugins:
   - filebeat
