@@ -318,7 +318,8 @@ indices.recovery.max_bytes_per_sec: 100mb
 {% endif %}
 
 discovery.zen.minimum_master_nodes: "{{ (((elastic_hosts|length) / 2 )|round + 1 ) }}"  # count?
-discovery.zen.ping.unicast.hosts: ["{{ elastic_hosts|join(', ') }}"]
+#discovery.zen.ping.unicast.hosts: ["{{ elastic_hosts|join(', ') }}"]
+discovery.zen.ping.unicast.hosts: "{{ elastic_hosts.split() }}"
 
 # Set the time to wait for ping responses from other nodes when discovering.
 # Set this option to a higher value on a slow or congested network

@@ -40,6 +40,6 @@
 - name: Add instances to cluster "kibana"
   add_host: hostname={{ item.public_ip }} groups=kibana
   loop: "{{ ec2.instances }}"
-  when: (item.ami_launch_index == "1")
+  when: (item.ami_launch_index == "2")
 
 - pause: minutes=1

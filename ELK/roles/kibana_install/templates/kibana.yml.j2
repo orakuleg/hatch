@@ -13,8 +13,5 @@ server.host: "0.0.0.0"
 # setting. When the value of this setting is false, Kibana uses the hostname of the host
 # that connects to this Kibana instance.
 #elasticsearch.preserveHost: true
-{% set elastic_hosts = [] %}
-{% for host in groups.monitoring_normal %}
-  {{ elastic_hosts.append( host+":9200" ) }}
-{% endfor %}
-elasticsearch.hosts: ["{{ elastic_hosts|join(', ') }}"]
+
+elasticsearch.url: "https://{{ groups['monitoring_normal'][0] }}:9200"
