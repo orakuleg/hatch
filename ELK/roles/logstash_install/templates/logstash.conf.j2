@@ -1,0 +1,18 @@
+{% set elastic_hosts = [] %}
+{% for host in groups.elastic_instances %}
+  {{ elastic_hosts.append( host+":9200" ) }}
+{% endfor %}
+
+input {
+  beats {
+    port => "5044"
+  }
+}
+
+output {
+  elasticsearch {
+    hosts => ["{{ elastic_hosts | list | join ('\',\'') }}"]
+  }
+}
+#    hosts => {{ elastic_hosts }}
+

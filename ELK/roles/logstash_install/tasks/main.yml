@@ -17,20 +17,22 @@
 
 - name: Copy main conf for logstash
   template:
+    src: "logstash.conf.j2"
+    dest: "/etc/logstash/conf.d/logstash.conf"
+
+- name: Copy main conf for logstash
+  template:
     src: "logstash.yml.j2"
     dest: "/etc/logstash/logstash.yml"
 
 - name: Copy main log conf for logstash
   copy:
-    src: log4j2.properties
-    dest: "/etc/logstash/log4j2.properties"
+    src: "{{ item }}"
+    dest: "/etc/logstash/{{ item }}"
     mode: 0755
-
-- name: Copy main JVM conf for logstash
-  copy:
-    src: jvm.options
-    dest: "/etc/logstash/jvm.options"
-    mode: 0755
+  with_items:
+    - "log4j2.properties"
+    - "jvm.options"
 
 - name: Execute the script
   shell: /usr/share/logstash/bin/system-install
