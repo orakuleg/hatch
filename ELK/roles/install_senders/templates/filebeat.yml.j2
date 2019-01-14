@@ -4,11 +4,12 @@
 
 #=========================== Filebeat inputs =============================
 
-filebeat.inputs:
+filebeat.prospectors:
 - type: log
-  enabled: false
   paths:
     - /var/log/*.log
+  document_type: syslog
+  registry: /var/lib/filebeat/registry
 
 #============================= Filebeat modules ===============================
 

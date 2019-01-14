@@ -27,3 +27,6 @@
     state: started
   with_items:
     - "{{ plugins }}"
+
+#filebeat setup --template -E output.logstash.enabled=false -E 'output.elasticsearch.hosts=["{{ groups['elastic_instances'][0] }}:9200"]'
+#filebeat setup --dashboards
