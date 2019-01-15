@@ -1,4 +1,28 @@
 ---
+- name: Change swapiness
+  sysctl:
+    name: vm.swappiness
+    value: 1
+    sysctl_set: yes
+    state: present
+    reload: yes
+
+- name: Change max_map_count
+  sysctl:
+    name: vm.max_map_count
+    value: 262144
+    sysctl_set: yes
+    state: present
+    reload: yes
+
+- name: Change file-max
+  sysctl:
+    name: fs.file-max
+    value: 100000
+    sysctl_set: yes
+    state: present
+    reload: yes
+
 - name: Download elasticsearch
   get_url:
     url: "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-{{ ELK_stack.major_version }}.\
