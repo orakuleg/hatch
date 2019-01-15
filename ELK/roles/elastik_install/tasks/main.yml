@@ -23,6 +23,15 @@
     state: present
     reload: yes
 
+- name: Set PAM limits for elasticsearch user.
+  pam_limits:
+    domain: "{{ item.domain }}"
+    limit_item: "{{ item.limit_item }}"
+    limit_type: "{{ item.limit_type }}"
+    value: "{{ item.value }}"
+    backup: yes
+  with_items: "{{ elk_elasticsearch_pam_limits }}"
+
 - name: Download elasticsearch
   get_url:
     url: "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-{{ ELK_stack.major_version }}.\

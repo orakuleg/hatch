@@ -25,4 +25,23 @@ plugins:
 ansible_user: ec2-user
 ansible_ssh_private_key_file: /home/centos/mykey.pem
 # Support multiple plugins enabled, just for test - only filebeat
+elk_elasticsearch_pam_limits:
+  - domain: elasticsearch
+    limit_item: memlock
+    limit_type: hard
+    value: unlimited
 
+  - domain: elasticsearch
+    limit_item: memlock
+    limit_type: soft
+    value: unlimited
+
+  - domain: elasticsearch
+    limit_item: nofile
+    limit_type: soft
+    value: 65535
+
+  - domain: elasticsearch
+    limit_item: nofile
+    limit_type: hard
+    value: 65535
