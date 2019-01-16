@@ -25,16 +25,16 @@
 - name: Add instances to cluster "elastic_instances"
   add_host: hostname={{ item.public_ip }} groups=elastic_instances
   loop: "{{ ec2.instances }}"
-  when: (item.ami_launch_index|int in range(1, elastic_nodes+1))
+  when: (item.ami_launch_index|int in range(1, ELK_stack.hardware.elastic_nodes+1))
 
 - name: Add instances to cluster "logstash"
   add_host: hostname={{ item.public_ip }} groups=logstash
   loop: "{{ ec2.instances }}"
-  when: (item.ami_launch_index|int in range(elastic_nodes+1, elastic_nodes+logstash_nodes+1))
+  when: (item.ami_launch_index|int in range(ELK_stack.hardware.elastic_nodes+1, ELK_stack.hardware.elastic_nodes+ELK_stack.hardware.logstash_nodes+1))
 
 - name: Add instances to cluster "kibana"
   add_host: hostname={{ item.public_ip }} groups=kibana
   loop: "{{ ec2.instances }}"
-  when: (item.ami_launch_index|int in range(elastic_nodes+logstash_nodes+1, elastic_nodes+logstash_nodes+kibana_nodes+1))
+  when: (item.ami_launch_index|int in range(ELK_stack.hardware.elastic_nodes+ELK_stack.hardware.logstash_nodes+1, ELK_stack.hardware.elastic_nodes+ELK_stack.hardware.logstash_nodes+ELK_stack.hardware.kibana_nodes+1))
 
 - pause: minutes=1
