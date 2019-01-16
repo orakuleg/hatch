@@ -30,9 +30,12 @@ ELK_stack:
       - filebeat
   elasticsearch:
     system_cettings:
-      - {name: "vm.max_map_count", value: "262144"}
-      - {name: "fs.file-max", value: "100000"}
-      - {name: "vm.swappiness", value: "1"}
+      - name: "vm.max_map_count"
+        value: "262144"
+      - name: "fs.file-max"
+        value: "100000"
+      - name: "vm.swappiness"
+        value: "1"
     path_data: /var/lib/elasticsearch
     path_logs: /var/log/elasticsearch
     elk_elasticsearch_pam_limits:
