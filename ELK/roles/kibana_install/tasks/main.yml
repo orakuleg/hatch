@@ -25,7 +25,7 @@
 
 - name: Check kibana web-UI
   uri:
-    url: "http://{{ inventory_hostname }}:{{ kibana_port }}"
+    url: "http://{{ inventory_hostname }}:{{ ELK_stack.kibana.kibana_port }}"
     status_code: ['200','503']
   retries: 6
   delay: 10
