@@ -4,7 +4,7 @@
 {% endfor %}
 input {
   beats {
-    port => "5044"
+    port => "{{ ELK_stack.logstash.logstash_port }}"
   }
 }
 

@@ -5,7 +5,7 @@
     instance_type: "{{ ec2_vars.instance_type }}"
     image: "{{ ec2_vars.image }}"
     wait: yes
-    count: "{{ total_nodes }}"
+    count: "{{ ELK_stack.hardware.total_nodes }}"
     wait: true
     vpc_subnet_id: "{{ ec2_vars.vpc_subnet_id }}"
     assign_public_ip: yes

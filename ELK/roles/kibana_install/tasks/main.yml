@@ -1,13 +1,14 @@
 ---
 - name: Download kibana
   get_url:
-    url: "https://artifacts.elastic.co/downloads/kibana/kibana-{{ ELK_stack.major_version }}.\
-         {{ ELK_stack.minor_version }}.{{ ELK_stack.patch }}-x86_64.rpm"
-    dest: "{{ ELK_stack.temp_folder}}"
+    url: "https://artifacts.elastic.co/downloads/kibana/kibana-{{ ELK_stack.global.major_version }}.\
+         {{ ELK_stack.global.minor_version }}.{{ ELK_stack.global.patch }}-x86_64.rpm"
+    dest: "{{ ELK_stack.global.temp_folder}}"
 
 - name: Install kibana rpm.
   yum:
-     name: "{{ ELK_stack.temp_folder}}/kibana-{{ ELK_stack.major_version }}.{{ ELK_stack.minor_version }}.{{ ELK_stack.patch }}-x86_64.rpm"
+     name: "{{ ELK_stack.global.temp_folder}}/kibana-{{ ELK_stack.global.major_version }}.\
+            {{ ELK_stack.global.minor_version }}.{{ ELK_stack.global.patch }}-x86_64.rpm"
      state: present
 
 - name: Copy template for plugin

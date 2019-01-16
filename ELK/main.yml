@@ -23,7 +23,7 @@
   tasks:
   - name: Create tmp folder
     file:
-      path: "{{ ELK_stack.temp_folder}}"
+      path: "{{ ELK_stack.global.temp_folder}}"
       state: directory
       mode: 0755
 
@@ -48,14 +48,6 @@
     - kibana_install
   become_user: root
   become: True
-
-# - name: monitoring_2 install
-#   hosts: monitoring_2
-#   roles:
-#     - prod_elastik_install
-#   become_user: root
-#   become: True
-#   when: ( production == true )
 
 - name: linux_server install
   hosts: linux_server
