@@ -1,27 +1,12 @@
 ---
-- name: Change swapiness
+- name: Make system configuration.
   sysctl:
-    name: vm.swappiness
-    value: 1
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
     sysctl_set: yes
     state: present
     reload: yes
-
-- name: Change max_map_count
-  sysctl:
-    name: vm.max_map_count
-    value: 262144
-    sysctl_set: yes
-    state: present
-    reload: yes
-
-- name: Change file-max
-  sysctl:
-    name: fs.file-max
-    value: 100000
-    sysctl_set: yes
-    state: present
-    reload: yes
+  with_items: "{{ ELK_stack.elasticsearch.system_cettings }}"
 
 - name: Set PAM limits for elasticsearch user.
   pam_limits:
