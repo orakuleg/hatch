@@ -64,6 +64,18 @@
     dest: "/etc/elasticsearch/log4j2.properties"
     mode: 0755
 
+- name: Copy elasticsearch-file
+  copy:
+    src: elasticsearch
+    dest: "/etc/sysconfig/elasticsearch"
+    mode: 0755
+
+- name: Copy Elastic service sfile
+  copy:
+    src: elasticsearch.service
+    dest: "/usr/lib/systemd/system/elasticsearch.service"
+    mode: 0755
+
 - name: Start elasticsearch service, if not started
   service:
     name: elasticsearch
