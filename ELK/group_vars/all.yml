@@ -12,7 +12,8 @@ ELK_stack:
     elastic_nodes: 2
     logstash_nodes: 1
     kibana_nodes: 1
-    total_nodes: "{{ linux_nodes + elastic_nodes + logstash_nodes + kibana_nodes }}"
+    total_nodes: "{{ ELK_stack.hardware.linux_nodes + ELK_stack.hardware.elastic_nodes + \
+                  ELK_stack.hardware.logstash_nodes + ELK_stack.hardware.kibana_nodes }}"
   global:
     major_version: 6
     minor_version: 5
