@@ -1,11 +1,15 @@
 ---
+- name: Check total nodes
+  set_fact:
+    total_nodes: "{{ ELK_stack.hardware.linux_nodes + ELK_stack.hardware.elastic_nodes + ELK_stack.hardware.logstash_nodes + ELK_stack.hardware.kibana_nodes }}"
+
 - name: Provision instances.
   ec2:
     key_name: "{{ ec2_vars.key_name }}"
     instance_type: "{{ ec2_vars.instance_type }}"
     image: "{{ ec2_vars.image }}"
     wait: yes
-    count: "{{ ELK_stack.total_nodes }}"
+    count: "{{ total_nodes }}"
     wait: true
     vpc_subnet_id: "{{ ec2_vars.vpc_subnet_id }}"
     assign_public_ip: yes
